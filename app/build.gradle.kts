@@ -45,9 +45,14 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
 
+    // Moshi
     implementation(libs.moshi)
     ksp(libs.moshi.kotlinCodeGen)
+
+    // Activity
+    implementation(libs.activity.ktx)
 }
