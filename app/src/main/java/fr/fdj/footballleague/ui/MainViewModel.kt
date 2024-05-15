@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.fdj.footballleague.api.service.LeagueService
+import fr.fdj.footballleague.repository.LeagueRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,11 +21,14 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val leagueService: LeagueService
+    private val leagueRepository: LeagueRepository
 ): ViewModel() {
+    /**
+     * Fetches the list of leagues and displays it in the log
+     */
     fun fetchAllLeagues() {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.v("FDJ", "${leagueService.getAllLeagues()}")
+            Log.v("FDJ", "${leagueRepository.getAllLeagues()}")
         }
     }
 }

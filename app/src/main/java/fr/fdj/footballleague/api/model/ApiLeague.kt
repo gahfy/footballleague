@@ -2,6 +2,9 @@ package fr.fdj.footballleague.api.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import fr.fdj.footballleague.model.League
+import fr.fdj.footballleague.model.Sport
+import fr.fdj.footballleague.utils.extension.asSimpleUnsignedLongOrNull
 
 /**
  * Model which represents a league as it is in the API.
@@ -31,4 +34,16 @@ data class ApiLeague(
 
     @Json(name = "strLeagueAlternate")
     val alternateName: String?
+)
+
+/**
+ * Returns a new instance of [League] with the same data as in the [ApiLeague] instance.
+ *
+ * @return a new instance of [League] with the same data as in the [ApiLeague] instance
+ */
+fun ApiLeague.toLeague() : League = League(
+    id.asSimpleUnsignedLongOrNull()?:0,
+    name,
+    Sport.fromName(sport)?:Sport.UNKNOWN,
+    alternateName
 )
