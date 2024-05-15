@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">FootballLeague</string>
+    <string name="app_name">Football League</string>
+
+    <string name="search_by_league">Search by league</string>
 </resources>
