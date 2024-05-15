@@ -1,4 +1,4 @@
-package fr.fdj.footballleague.ui
+package fr.fdj.footballleague.ui.business.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

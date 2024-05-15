@@ -1,20 +1,15 @@
-package fr.fdj.footballleague.ui
+package fr.fdj.footballleague.ui.business.main
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fr.fdj.footballleague.api.service.LeagueService
 import fr.fdj.footballleague.model.League
 import fr.fdj.footballleague.repository.LeagueRepository
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import javax.inject.Inject
 
 /**
