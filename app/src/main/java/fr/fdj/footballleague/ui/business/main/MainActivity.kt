@@ -4,9 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import fr.fdj.footballleague.ui.component.AutocompleteTextField
+import fr.fdj.footballleague.ui.theme.AppSurface
+import fr.fdj.footballleague.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 
@@ -22,7 +26,13 @@ class MainActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AutocompleteTextField()
+            AppTheme {
+                AppSurface(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    AutocompleteTextField()
+                }
+            }
         }
 
         lifecycleScope.launch {
