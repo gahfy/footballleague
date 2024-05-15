@@ -3,7 +3,9 @@ package fr.fdj.footballleague.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 /**
@@ -17,6 +19,8 @@ class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.fetchAllLeagues()
+        lifecycleScope.launch {
+            viewModel.mainIntent.send(MainIntent.FetchLeagues)
+        }
     }
 }
