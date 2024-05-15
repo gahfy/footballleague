@@ -5,7 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import fr.fdj.footballleague.ui.component.AutocompleteTextField
@@ -25,15 +30,13 @@ class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
-            AppTheme {
-                AppSurface(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    AutocompleteTextField()
+            lifecycleScope.launch {
+                viewModel.state.collect { state ->
+                    setContent {
+                        MainScreen(state = state)
+                    }
                 }
             }
-        }
 
         lifecycleScope.launch {
             viewModel.mainIntent.send(MainIntent.FetchLeagues)

@@ -20,4 +20,6 @@ data class League(
     val name: String,
     val sport: Sport,
     val alternateName: String?
-)
+) {
+    override fun toString() = name
+}
