@@ -2,11 +2,16 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.dagger)
 }
 
 android {
     namespace = "fr.fdj.footballleague"
     compileSdk = 34
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId = "fr.fdj.footballleague"
@@ -49,10 +54,17 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
 
+    // OkHttp
+    implementation(libs.okhttp.loggingInterceptor)
+
     // Moshi
     implementation(libs.moshi)
     ksp(libs.moshi.kotlinCodeGen)
 
     // Activity
     implementation(libs.activity.ktx)
+
+    // Dagger hilt
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
 }
