@@ -1,7 +1,5 @@
 package fr.fdj.footballleague.ui.business.main
 
-import fr.fdj.footballleague.model.League
-
 /**
  * Intents to be handled for the main screen
  */

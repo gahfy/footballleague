@@ -1,6 +1,5 @@
 package fr.fdj.footballleague.ui.business.main
 
-import android.util.Log
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

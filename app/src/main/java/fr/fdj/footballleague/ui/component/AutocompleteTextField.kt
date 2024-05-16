@@ -56,11 +56,7 @@ fun <T> AutocompleteTextField(
         TextField(
             modifier = Modifier
                 .onFocusChanged { focusState ->
-                    if (focusState.hasFocus) {
-                        menuExpanded = true
-                    } else {
-                        menuExpanded = false
-                    }
+                    menuExpanded = focusState.hasFocus
                 }
                 .fillMaxWidth(),
             value = value,

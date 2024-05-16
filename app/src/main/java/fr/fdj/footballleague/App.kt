@@ -7,5 +7,4 @@ import dagger.hilt.android.HiltAndroidApp
  * Application class of the project
  */
 @HiltAndroidApp
-class App: Application() {
-}
+class App: Application()

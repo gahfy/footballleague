@@ -34,7 +34,7 @@ val DarkColors = darkColorScheme(
 fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     useDynamicColors: Boolean = false,
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
     val colors = getColorScheme(
         useDarkTheme = useDarkTheme,
@@ -58,9 +58,9 @@ fun AppTheme(
 
 @Composable
 fun AppSurface(
+    modifier: Modifier = Modifier,
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     useDynamicColors: Boolean = false,
-    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     val colors = getColorScheme(
