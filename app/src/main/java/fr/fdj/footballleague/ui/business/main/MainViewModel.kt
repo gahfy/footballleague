@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.fdj.footballleague.model.League
+import fr.fdj.footballleague.model.Team
 import fr.fdj.footballleague.repository.LeagueRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -32,8 +33,11 @@ class MainViewModel @Inject constructor(
     val state: StateFlow<MainState>
         get() = _state
 
-    var allLeagues: List<League> = listOf()
-    var textValue: TextFieldValue = TextFieldValue("")
+    private var allLeagues: List<League> = listOf()
+    private var teams: List<Team> = listOf()
+    private var teamsError = false
+    private var textValue: TextFieldValue = TextFieldValue("")
+    private var selectedLeague: League? = null
 
     init {
         handleIntent()
@@ -47,7 +51,6 @@ class MainViewModel @Inject constructor(
             mainIntent.consumeAsFlow().collect {
                 when (it) {
                     is MainIntent.FetchLeagues -> fetchAllLeagues()
-                    is MainIntent.FetchTeams -> fetchTeams(it.league)
                 }
             }
         }
@@ -58,36 +61,62 @@ class MainViewModel @Inject constructor(
      */
     private fun fetchAllLeagues() {
         viewModelScope.launch(Dispatchers.IO) {
-            allLeagues = leagueRepository.getAllLeagues()
+            try {
+                allLeagues = leagueRepository.getAllLeagues()
+                updateState()
+            } catch (t: Throwable) {
+                updateErrorState()
+            }
+        }
+    }
+
+    private fun fetchTeams() {
+        viewModelScope.launch(Dispatchers.IO) {
+            selectedLeague?.let {
+                try {
+                    teams = leagueRepository.searchAllTeams(it)
+                    teamsError = false
+                } catch(t: Throwable) {
+                    teamsError = true
+                }
+            }
             updateState()
         }
     }
 
-    private fun fetchTeams(league: League) {
-        // TODO: Develop this method
-    }
-
     private fun onTextValueChanged(value: TextFieldValue) {
         textValue = value
+        selectedLeague = null
+        teams = listOf()
+        teamsError = false
         updateState()
     }
 
     private fun onMenuItemSelected(league: League) {
         textValue = TextFieldValue(league.name)
+        selectedLeague = league
         updateState()
+        fetchTeams()
     }
 
     private fun updateState() {
-        Log.e("Gahfy", "${textValue.text} / ${allLeagues}")
         _state.value = MainState.LeaguesRetrievedState(
             textValue = textValue,
             onValueChanges = ::onTextValueChanged,
             menuValues = allLeagues.filter {
                 val returnValue = it.name.lowercase().contains(textValue.text.lowercase()) || (it.alternateName?.lowercase()?.contains(textValue.text.lowercase())?:false)
-                Log.e("Gahfy", "$it => $returnValue")
                 returnValue
             },
-            onMenuItemSelected = ::onMenuItemSelected
+            onMenuItemSelected = ::onMenuItemSelected,
+            teams = teams,
+            teamsError = teamsError,
+            retryTeams = ::fetchTeams
+        )
+    }
+
+    private fun updateErrorState() {
+        _state.value = MainState.ErrorState(
+            retryLeagues = ::fetchAllLeagues
         )
     }
 }

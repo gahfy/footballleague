@@ -3,4 +3,8 @@
     <string name="app_name">Ligue de football</string>
 
     <string name="search_by_league">Rechercher par ligue</string>
+
+    <string name="error">Erreur lors du chargement des données</string>
+
+    <string name="retry">Réessayer</string>
 </resources>

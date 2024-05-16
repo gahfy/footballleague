@@ -34,16 +34,16 @@ data class ApiLeague(
 
     @Json(name = "strLeagueAlternate")
     val alternateName: String?
-)
-
-/**
- * Returns a new instance of [League] with the same data as in the [ApiLeague] instance.
- *
- * @return a new instance of [League] with the same data as in the [ApiLeague] instance
- */
-fun ApiLeague.toLeague() : League = League(
-    id.asSimpleUnsignedLongOrNull()?:0,
-    name,
-    Sport.fromName(sport)?:Sport.UNKNOWN,
-    alternateName
-)
+) {
+    /**
+     * Returns a new instance of [League] with the same data as in the [ApiLeague] instance.
+     *
+     * @return a new instance of [League] with the same data as in the [ApiLeague] instance
+     */
+    fun toLeague() : League = League(
+        id.asSimpleUnsignedLongOrNull()?:0,
+        name,
+        Sport.fromName(sport)?:Sport.UNKNOWN,
+        alternateName
+    )
+}
